@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Motivation and Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Mathematical Formulation}{5}{0}{2}
+\beamer@sectionintoc {3}{The Core Geometric Trick: Adding a Dimension}{13}{0}{3}
+\beamer@sectionintoc {4}{Computational Challenges}{14}{0}{4}
+\beamer@sectionintoc {5}{Numerical Tours and Results}{15}{0}{5}
+\beamer@sectionintoc {6}{Implementation \& Conclusion}{26}{0}{6}

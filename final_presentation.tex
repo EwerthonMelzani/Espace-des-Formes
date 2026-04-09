@@ -20,7 +20,7 @@
 
 \title[Diffeomorphic Learning]{Diffeomorphic Learning for Nonlinear Classification}
 \subtitle{Revising the Mathematical Flow, Geometry, \& Numerical Results}
-\author{Final Presentation (Version 2)}
+\author{Final Presentation }
 \date{\today}
 
 \begin{document}
@@ -87,7 +87,7 @@ G(\phi,\theta)= \underbrace{D(\mathrm{id},\phi)^2}_{\text{Deformation Cost}} + \
 \]
 
 \begin{itemize}
-  \item $D(\mathrm{id},\phi)^2 = \inf_v \int_0^1 \|v(t)\|_V^2\,dt$: In Riemannian geometry, distance is the shortest path (an $L^1$ length). However, minimizing this $L^2$ action (which physically mirrors \textbf{Kinetic Energy} $\propto \int v^2$) mathematically guarantees the \textit{exact same} shortest path, but forces a smooth, constant-speed flow.
+  \item $D(\mathrm{id},\phi)^2 = \inf_v \int_0^1 \|v(t)\|_V^2\,dt$: In Riemannian geometry, distance is the shortest path (an $L^1$ length). However, minimizing this $L^2$ action (which physically mirrors \textbf{Kinetic Energy} $\propto \int v^2$) mathematically guarantees the exact same shortest path, but forces a smooth, constant-speed flow.
   \item $g(\theta)$: Standard regularization (e.g., $L^2$) on terminal classifier parameters $\theta$.
   \item $\Gamma$: Cross-entropy data loss. Yes, the classification loss is evaluated \textbf{strictly} and only at the final time $t=1$, assessing how linearly separable the points $\phi(1)\cdot x$ have become.
 \end{itemize}
@@ -118,7 +118,7 @@ The velocity field $v(t, x)$ at any time $t$ lives in a \textbf{Reproducing Kern
 \textbf{The Fix (Section 4.3):}
 \begin{itemize}
   \item We explicitly construct an extended vector space: $\widehat{v}(t, \cdot) = g(t, \cdot) + v(t, \cdot)$, where $g$ belongs to a Lie algebra (e.g., Affine transforms).
-  \item \textbf{Crucial Result:} This breaks the rotational invariance of scalar kernels and massively increases the topological expressivity of the model. \textit{It is a structural necessity.}
+  \item \textbf{Crucial Result:} This breaks the rotational invariance of scalar kernels and massively increases the topological expressivity of the model. It is a structural necessity.
 \end{itemize}
 \end{frame}
 
@@ -157,7 +157,7 @@ Plugging this back into our original cost formulation yields our final \textbf{c
 \dot{z}_k(t) = \widehat{v}\big(t, z_k(t)\big), \quad z_k(0) = x_k
 \]
 
-\textit{This completely reduces the continuous setting to an exact \textbf{finite-dimensional optimal control problem} over variables $a, g,$ and $\theta$.}
+This completely reduces the continuous setting to an exact \textbf{finite-dimensional optimal control problem} over variables $a, g,$ and $\theta$.
 \end{frame}
 
 \begin{frame}{Pontryagin Maximum Principle: Why Applicable Here}
@@ -171,7 +171,7 @@ We have exactly the PMP setting:
 Hence, first-order optimality can be characterized via a \textbf{Hamiltonian mechanics} system coupling the forward positions with a backward co-state $p(t)$.
 
 \vspace{2mm}
-\textbf{Role in practice:} PMP mechanics naturally provide the exact \textit{Backpropagation-Through-Time (BPTT)} equations needed to iteratively extract gradients.
+\textbf{Role in practice:} PMP mechanics naturally provide the exact \textbf{Backpropagation-Through-Time (BPTT)} equations needed to iteratively extract gradients.
 \end{frame}
 
 \begin{frame}{Applying PMP: Continuous Optimality System}
@@ -212,7 +212,6 @@ p(T-1)=\frac{1}{\sigma^2}\partial_z\Gamma.
 u_k(t)=\sum_l K\big(z_k(t),z_l(t)\big)\big(p_l(t)-2a_l(t)\big).
 \]
 
-\centering \textit{This explicitly establishes mathematically rigorous backpropagation through the geometric deformation!}
 \end{frame}
 
 \section{The Core Geometric Trick: Adding a Dimension}
@@ -261,10 +260,15 @@ MLP & $\mathcal{O}(N d h)$ / epoch & Scales well linearly with minibatching. \\
 
 \begin{frame}{Experimental Setup}
 \begin{itemize}
-  \item Datasets: circles, moons, blobs, gaussian quantiles.
-  \item 2D baseline vs 3D lifting (The Dummy Dimension approach, injected with Gaussian noise $\sigma=0.01$).
-  \item Paired seeds: 0, 1, 2.
-  \item Metrics: test accuracy (mean and std).
+  \item \textbf{Datasets evaluated}:
+    \begin{itemize}
+      \item \textbf{Circles}: Concentric structures evaluating strict topological inclusion constraints.
+      \item \textbf{Moons}: Intertwined geometries assessing highly non-linear boundary separation capabilities.
+      \item \textbf{Blobs}: Linearly separated gaussian target clusters.
+      \item \textbf{Gaussian Quantiles}: Strongly nested, dense concentric groupings testing complex boundary extraction.
+    \end{itemize}
+  \item \textbf{Framework Variants}: 2D baseline versus 3D Lifting strategy (employing a dummy dimension initialized with Gaussian perturbation $\sigma=0.01$).
+  \item \textbf{Evaluation Environment}: Metrics reported as the test classification accuracy over 3 invariant initialized seed states.
 \end{itemize}
 \end{frame}
 
@@ -277,7 +281,7 @@ MLP & $\mathcal{O}(N d h)$ / epoch & Scales well linearly with minibatching. \\
 Notice the massive accuracy spike on Gaussian quantiles explicitly because of 3D Lifting!
 \end{frame}
 
-\begin{frame}{Who Performs Best Where? (Final Accuracy Criterion)}
+\begin{frame}{Results Analysis (Final Accuracy Criterion)}
 \small
 \centering
 \begin{tabular}{lccccc}
@@ -291,42 +295,167 @@ Quantiles & 0.533 & 0.533 & 0.856 & 0.928 & \textbf{+0.072} \\
 \bottomrule
 \end{tabular}
 
-\vspace{3mm}
+\vspace{2mm}
+\footnotesize
 \begin{itemize}
-  \item \textbf{Circles}: Strong topological barrier. Diffeo easily handles this via non-linear bending.
-  \item \textbf{Gaussian Quantiles}: The Dummy 3D dimension is mathematically necessary to let the algorithm flow inner quantiles over the outer quantiles. Result: a $+7.2\%$ leap in performance exactly mimicking theory.
+  \item \textbf{Circles}: Represents a bounded topological barrier. The algorithm leverages 3D lifting to perfectly decouple the locked ring without local minima penalties.
+  \item \textbf{Moons}: Devoid of strict inner boundaries. The native 2D continuous flow unbends the intertwined distribution seamlessly, achieving absolute precision accuracy universally.
+  \item \textbf{Blobs}: Natively linearly separable configurations. Diffeomorphic routing performs similarly to native linear limits across configurations with standard negligible deviation.
+  \item \textbf{Gaussian Quantiles}: The ultimate test for topological lifting, holding distinct intersecting rings. 3D projection mathematically acts as the essential variable enabling internal boundaries to elevate over exterior clusters resulting in the definitive $7.2\%$ accuracy climb.
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}{Dynamic Deformations: 3D Dummy Lifting Animation}
+\begin{frame}{Results Analysis: Circles Dataset (2D Flow)}
+\begin{columns}
+\begin{column}{0.5\textwidth}
 \centering
-% Extracted 49 frames for 3D
-\animategraphics[loop,autoplay,width=0.6\textwidth]{10}{animacoes/3D_frames/frame_}{0}{48}
+\textbf{Before} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/circles_2D_frames/before.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{After} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/circles_2D_frames/after.png}
+\end{column}
+\end{columns}
 
-\vspace{1mm}
-\footnotesize
-This animation shows the exact trajectory of points escaping their 2D topological bind by lifting into 3D.
+\vspace{5mm}
+\centering \footnotesize
+Native 2D deformations on the concentric Circles target. Notice the topological restriction limits complete geometric decoupling.
 \end{frame}
 
-\begin{frame}{Dynamic Deformations: 2D Target Flow Animation}
+\begin{frame}{Results Analysis: Circles Dataset (3D Lifting)}
+\begin{columns}
+\begin{column}{0.5\textwidth}
 \centering
-% Extracted 49 frames for 2D
-\animategraphics[loop,autoplay,width=0.6\textwidth]{10}{animacoes/2D_frames/frame_}{0}{48}
+\textbf{Before} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/circles_3D_frames/before.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{After} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/circles_3D_frames/after.png}
+\end{column}
+\end{columns}
 
-\vspace{1mm}
-\footnotesize
-2D spatial deformations stretching clusters towards linear separability.
+\vspace{5mm}
+\centering \footnotesize
+By injecting a 3D dummy dimension, the model correctly separates the locked ring over the surrounding context, reaching near 100\% metric convergence.
 \end{frame}
 
-\begin{frame}{Mathematical Topology Breaking (Section 5.1)}
+\begin{frame}{Results Analysis: Moons Dataset (2D Flow)}
+\begin{columns}
+\begin{column}{0.5\textwidth}
 \centering
-% Extracted 61 frames for section5_1
-\animategraphics[loop,autoplay,width=0.7\textwidth]{12}{animacoes/section5_1_frames/frame_}{0}{60}
+\textbf{Before} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/moons_2D_frames/before.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{After} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/moons_2D_frames/after.png}
+\end{column}
+\end{columns}
 
-\vspace{1mm}
-\footnotesize
-A direct visual proof of Section 5.1 from Younes (2019): escaping a locked ring using the continuous third dimension.
+\vspace{5mm}
+\centering \footnotesize
+2D spatial deformations successfully unbending the intertwined Moons distributions since they are not bounded continuously.
+\end{frame}
+
+\begin{frame}{Results Analysis: Moons Dataset (3D Lifting)}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{Before} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/moons_3D_frames/before.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{After} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/moons_3D_frames/after.png}
+\end{column}
+\end{columns}
+
+\vspace{5mm}
+\centering \footnotesize
+3D Lifting results for the Moons dataset; minimal dimensional gain is noted since the 2D plane flow already achieved full accuracy.
+\end{frame}
+
+\begin{frame}{Results Analysis: Blobs Dataset (2D Flow)}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{Before} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/blobs_2D_frames/before.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{After} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/blobs_2D_frames/after.png}
+\end{column}
+\end{columns}
+
+\vspace{5mm}
+\centering \footnotesize
+Basic alignment of linearly separable Gaussian Blobs via learned 2D mapping.
+\end{frame}
+
+\begin{frame}{Results Analysis: Blobs Dataset (3D Lifting)}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{Before} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/blobs_3D_frames/before.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{After} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/blobs_3D_frames/after.png}
+\end{column}
+\end{columns}
+
+\vspace{5mm}
+\centering \footnotesize
+Dummy coordinate lifting over previously separated Blobs; Diffeomorphic models collapse seamlessly to simple affine transforms here.
+\end{frame}
+
+\begin{frame}{Results Analysis: Gaussian Quantiles (2D Flow)}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{Before} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/gaussian_quantiles_2D_frames/before.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{After} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/gaussian_quantiles_2D_frames/after.png}
+\end{column}
+\end{columns}
+
+\vspace{5mm}
+\centering \footnotesize
+Struggling to cluster interlaced target segments inside the Quantiles dataset natively within the 2D bounding volume.
+\end{frame}
+
+\begin{frame}{Results Analysis: Gaussian Quantiles (3D Lifting)}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{Before} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/gaussian_quantiles_3D_frames/before.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\textbf{After} \\
+\includegraphics[width=0.85\textwidth]{animacoes/frames/gaussian_quantiles_3D_frames/after.png}
+\end{column}
+\end{columns}
+
+\vspace{5mm}
+\centering \footnotesize
+Maximum performance climb (+7.2\% Delta): Complete spatial unlocking using the hidden vertical axis yielding a smooth, continuous topology lift over intersecting sets.
 \end{frame}
 
 \section{Implementation \& Conclusion}
@@ -367,6 +496,9 @@ A direct visual proof of Section 5.1 from Younes (2019): escaping a locked ring 
 \begin{frame}
 \centering
 \Large Thank you.
+
+\vspace{1cm}
+\qrcode[height=3cm]{https://github.com/EwerthonMelzani/Espace-des-Formes\#}
 \end{frame}
 
 \end{document}
