@@ -89,7 +89,7 @@ G(\phi,\theta)= \underbrace{D(\mathrm{id},\phi)^2}_{\text{Deformation Cost}} + \
 \begin{itemize}
   \item $D(\mathrm{id},\phi)^2 = \inf_v \int_0^1 \|v(t)\|_V^2\,dt$: In Riemannian geometry, distance is the shortest path (an $L^1$ length). However, minimizing this $L^2$ action (which physically mirrors \textbf{Kinetic Energy} $\propto \int v^2$) mathematically guarantees the exact same shortest path, but forces a smooth, constant-speed flow.
   \item $g(\theta)$: Standard regularization (e.g., $L^2$) on terminal classifier parameters $\theta$.
-  \item $\Gamma$: Cross-entropy data loss. Yes, the classification loss is evaluated \textbf{strictly} and only at the final time $t=1$, assessing how linearly separable the points $\phi(1)\cdot x$ have become.
+  \item $\Gamma$: Cross-entropy data loss that is evaluated \textbf{strictly} and only at the final time $t=1$, assessing how linearly separable the points $\phi(1)\cdot x$ have become.
 \end{itemize}
 \end{frame}
 

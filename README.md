@@ -26,3 +26,27 @@ The structured framework within the `/code` directory contains the following imp
 Complementary rigorous mathematical analyses (detailing RKHS optimality criteria, affine energy constraints, computation optimizations around $\mathcal{O}(N^2)$ control variables, and finite state formulation) along with global comparative results, have been explicitly formulated.
 
 View the compiled presentation analysis mapping out the complete theoretical boundaries here: **[`final_presentation.pdf`](final_presentation.pdf)**.
+
+## Visual Results
+
+Below are the dynamic transformation flows mapping non-linearly separable datasets toward linear separability. For each geometric dataset, we compare native **2D Euclidean flow** against the topologically unconstrained **3D Dummy Lifting**.
+
+### Circles
+| 2D Flow | 3D Lifting |
+| :---: | :---: |
+| ![Circles 2D](animacoes/2D/circles_seed2_2D.gif) | ![Circles 3D](animacoes/3D/circles_seed2_3D.gif) |
+
+### Moons
+| 2D Flow | 3D Lifting |
+| :---: | :---: |
+| ![Moons 2D](animacoes/2D/moons_seed0_2D.gif) | ![Moons 3D](animacoes/3D/moons_seed0_3D.gif) |
+
+### Gaussian Blobs
+| 2D Flow | 3D Lifting |
+| :---: | :---: |
+| ![Blobs 2D](animacoes/2D/blobs_seed1_2D.gif) | ![Blobs 3D](animacoes/3D/blobs_seed1_3D.gif) |
+
+### Gaussian Quantiles
+| 2D Flow | 3D Lifting |
+| :---: | :---: |
+| ![Quantiles 2D](animacoes/2D/gaussian_quantiles_seed0_2D.gif) | ![Quantiles 3D](animacoes/3D/gaussian_quantiles_seed0_3D.gif) |
